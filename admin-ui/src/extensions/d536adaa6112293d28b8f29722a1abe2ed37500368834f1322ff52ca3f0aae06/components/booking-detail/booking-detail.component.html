@@ -1,0 +1,73 @@
+<vdr-action-bar>
+    <vdr-ab-left>
+        <div class="review-info">
+            <vdr-entity-info [entity]="entity$ | async"></vdr-entity-info>
+        </div>
+    </vdr-ab-left>
+    <vdr-ab-right>
+        <button
+            class="btn btn-primary"
+            *ngIf="isNew$ | async; else updateButton"
+            (click)="create()"
+            [disabled]="!(detailForm.valid && detailForm.dirty)"
+        >
+            {{ 'common.create' | translate }}
+        </button>
+        <ng-template #updateButton>
+            <button
+                class="btn btn-primary"
+                (click)="save()"
+                [disabled]="detailForm.invalid || detailForm.pristine"
+            >
+                {{ 'common.update' | translate }}
+            </button>
+        </ng-template>
+    </vdr-ab-right>
+</vdr-action-bar>
+
+<div class="clr-row">
+    <div class="clr-col">
+        <form class="form" [formGroup]="detailForm">
+            <section class="form-block">
+                <vdr-form-field label="Titlu" for="name" [readOnlyToggle]="!(isNew$ | async)">
+                    <input
+                        id="name"
+                        type="text"
+                        formControlName="name"
+                    />
+                </vdr-form-field>
+                <vdr-form-field label="Start date" for="startDate" [readOnlyToggle]="!(isNew$ | async)">
+                    <input
+                        id="startDate"
+                        type="date"
+                        formControlName="startDate"
+                    />
+                </vdr-form-field>
+                <vdr-form-field label="End date" for="endDate" [readOnlyToggle]="!(isNew$ | async)">
+                    <input
+                        id="endDate"
+                        type="date"
+                        formControlName="endDate"
+                    />
+                </vdr-form-field>
+                <vdr-form-field label="Seats available" for="seatsAvailable" [readOnlyToggle]="!(isNew$ | async)">
+                    <input
+                        id="seatsAvailable"
+                        type="number"
+                        formControlName="seatsAvailable"
+                    />
+                </vdr-form-field>
+                <vdr-form-field label="Course type" for="seatsAvailable" [readOnlyToggle]="!(isNew$ | async)">
+                    <select id="productId" name="productId" formControlName="productId">
+                        <option [ngValue]="null">Select a course...</option>
+                        <option *ngFor="let item of products$ | async" [ngValue]="item.id">
+                            <b>{{ item.name }} ({{ item.variants[0].price / 100 }}RON)</b>
+<!--                            {{ item.rating }} / 5-->
+                        </option>
+                    </select>
+                </vdr-form-field>
+            </section>
+            <pre>{{ stringify() }}</pre>
+        </form>
+    </div>
+</div>

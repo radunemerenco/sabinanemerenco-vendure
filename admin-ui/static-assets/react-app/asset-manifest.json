@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/admin/assets/react-app/static/css/main.35e7f7b1.chunk.css",
+    "main.js": "/admin/assets/react-app/static/js/main.cb4b3048.chunk.js",
+    "main.js.map": "/admin/assets/react-app/static/js/main.cb4b3048.chunk.js.map",
+    "runtime-main.js": "/admin/assets/react-app/static/js/runtime-main.350ef455.js",
+    "runtime-main.js.map": "/admin/assets/react-app/static/js/runtime-main.350ef455.js.map",
+    "static/css/2.d6dd06d2.chunk.css": "/admin/assets/react-app/static/css/2.d6dd06d2.chunk.css",
+    "static/js/2.7913c642.chunk.js": "/admin/assets/react-app/static/js/2.7913c642.chunk.js",
+    "static/js/2.7913c642.chunk.js.map": "/admin/assets/react-app/static/js/2.7913c642.chunk.js.map",
+    "index.html": "/admin/assets/react-app/index.html",
+    "precache-manifest.c3ed3a81a9d30b64d822bd23724bf16c.js": "/admin/assets/react-app/precache-manifest.c3ed3a81a9d30b64d822bd23724bf16c.js",
+    "service-worker.js": "/admin/assets/react-app/service-worker.js",
+    "static/css/2.d6dd06d2.chunk.css.map": "/admin/assets/react-app/static/css/2.d6dd06d2.chunk.css.map",
+    "static/css/main.35e7f7b1.chunk.css.map": "/admin/assets/react-app/static/css/main.35e7f7b1.chunk.css.map",
+    "static/js/2.7913c642.chunk.js.LICENSE.txt": "/admin/assets/react-app/static/js/2.7913c642.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.350ef455.js",
+    "static/css/2.d6dd06d2.chunk.css",
+    "static/js/2.7913c642.chunk.js",
+    "static/css/main.35e7f7b1.chunk.css",
+    "static/js/main.cb4b3048.chunk.js"
+  ]
+}
