@@ -2764,8 +2764,8 @@ export type Booking = Node & {
   name: Scalars['String'];
   startDate: Scalars['DateTime'];
   endDate: Scalars['DateTime'];
-  seatsAvailable: Scalars['ID'];
-  product: Product
+  seatsAvailable: Scalars['Int'];
+  productVariant: ProductVariant
 };
 
 export type BookingList = PaginatedList & {

@@ -3,7 +3,8 @@ import {
     Allow,
     Ctx,
     ListQueryBuilder,
-    Permission, Product,
+    Permission,
+    ProductVariant,
     RequestContext,
     Transaction,
     TransactionalConnection
@@ -38,8 +39,7 @@ export class BookingAdminResolver {
       @Args() { input }: MutationCreateBookingArgs
     ): Promise<BookingEntity> {
         const booking = new BookingEntity(input);
-        const product = await this.connection.getEntityOrThrow(ctx, Product, input.productId);
-        booking.product = product;
+        booking.productVariant = await this.connection.getEntityOrThrow(ctx, ProductVariant, input.productVariantId);
         // if (input.variantId) {
         //     const variant = await this.connection.getEntityOrThrow(ctx, ProductVariant, input.variantId);
         //     booking.productVariant = variant;

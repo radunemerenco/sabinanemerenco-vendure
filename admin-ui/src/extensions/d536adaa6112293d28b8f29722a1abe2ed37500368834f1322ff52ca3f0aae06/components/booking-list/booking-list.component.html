@@ -50,10 +50,10 @@
             {{ booking.seatsAvailable }}
         </td>
         <td class="left align-middle">
-            {{ booking.product?.name }}
+            {{ booking.productVariant?.name }}
         </td>
         <td class="left align-middle">
-            {{ (booking.product?.variants?.[0]?.price/100) + ' ' + booking.product?.variants?.[0]?.currencyCode }}
+            {{ (booking.productVariant?.price/100) + ' ' + booking.productVariant?.currencyCode }}
         </td>
         <td class="right align-middle">
             <vdr-table-row-action

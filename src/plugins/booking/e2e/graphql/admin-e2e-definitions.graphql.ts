@@ -8,6 +8,16 @@ export const CREATE_BOOKING = gql`
             startDate
             endDate
             seatsAvailable
+            productVariant {
+                id
+                name
+                price
+                currencyCode
+                product {
+                    id
+                    name
+                }
+            }
         }
     }
 `;
@@ -20,6 +30,16 @@ export const UPDATE_BOOKING = gql`
             startDate
             endDate
             seatsAvailable
+            productVariant {
+                id
+                name
+                price
+                currencyCode
+                product {
+                    id
+                    name
+                }
+            }
         }
     }
 `;

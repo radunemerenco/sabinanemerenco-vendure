@@ -12,14 +12,40 @@ import { filter, mapTo } from 'rxjs/operators';
 
 import {
     Booking,
+    Coordinate,
     CreateBooking,
     CreateBookingInput,
-    Product,
-    ProductList,
+    Maybe,
+    SearchResponse,
+    SearchResult,
+    SearchResultAsset,
+    SinglePrice,
     UpdateBooking,
     UpdateBookingInput,
 } from '../../generated-types';
-import {CREATE_BOOKING, GET_PRODUCTS, UPDATE_BOOKING} from './booking-detail.graphql';
+import {CREATE_BOOKING, SEARCH_PRODUCTS, UPDATE_BOOKING} from './booking-detail.graphql';
+
+type SearchInputResult = {
+    __typename?: "SearchResult" | undefined;
+} & Pick<SearchResult, "sku" | "productVariantId" | "productVariantName"> & {
+    productAsset?: Maybe<{
+        __typename?: "SearchResultAsset" | undefined;
+    } & Pick<SearchResultAsset, "id" | "preview"> & {
+        focalPoint?: Maybe<{
+            __typename?: "Coordinate" | undefined;
+        } & Pick<Coordinate, "x" | "y">> | undefined;
+    }> | undefined;
+    price: {
+        __typename?: "PriceRange" | undefined;
+    } | ({
+        __typename?: "SinglePrice" | undefined;
+    } & Pick<SinglePrice, "value">);
+    priceWithTax: {
+        __typename?: "PriceRange" | undefined;
+    } | ({
+        __typename?: "SinglePrice" | undefined;
+    } & Pick<SinglePrice, "value">);
+}
 
 @Component({
     selector: 'pe-booking-detail',
@@ -29,7 +55,8 @@ import {CREATE_BOOKING, GET_PRODUCTS, UPDATE_BOOKING} from './booking-detail.gra
 })
 export class BookingDetailComponent extends BaseDetailComponent<Booking> implements OnInit {
     detailForm: FormGroup;
-    products$: Observable<Array<Product>>
+    productSearchResult$: Observable<Array<SearchResult>>
+    selectedSearchResult: SearchInputResult
 
     constructor(
         route: ActivatedRoute,
@@ -46,11 +73,14 @@ export class BookingDetailComponent extends BaseDetailComponent<Booking> impleme
             startDate: ['', Validators.required],
             endDate: ['', Validators.required],
             seatsAvailable: ['', Validators.required],
-            productId: ['', Validators.required],
+            productVariantId: ['', Validators.required],
         });
-        this.products$ = this.dataService
-          .query<{ products: ProductList }>(GET_PRODUCTS)
-          .mapStream(response => response.products.items)
+        this.productSearchResult$ = this.dataService
+          .query<{ search: SearchResponse }>(SEARCH_PRODUCTS)
+          .mapStream(response => response
+            .search
+            .items
+          )
 
 
     }
@@ -69,7 +99,7 @@ export class BookingDetailComponent extends BaseDetailComponent<Booking> impleme
             startDate: new Date(formValue.startDate).toISOString(),
             endDate: new Date(formValue.endDate).toISOString(),
             seatsAvailable: formValue.seatsAvailable,
-            productId: formValue.productId,
+            productVariantId: formValue.productVariantId,
         };
         this.dataService
             .mutate<CreateBooking.Mutation, CreateBooking.Variables>(CREATE_BOOKING, { input: booking })
@@ -118,7 +148,7 @@ export class BookingDetailComponent extends BaseDetailComponent<Booking> impleme
                 startDate: new Date(formValue.startDate),
                 endDate: new Date(formValue.endDate),
                 seatsAvailable: formValue.seatsAvailable,
-                productId: formValue.productId,
+                productVariantId: formValue.productVariantId,
             };
             return this.dataService
                 .mutate<UpdateBooking.Mutation, UpdateBooking.Variables>(UPDATE_BOOKING, {
@@ -138,11 +168,20 @@ export class BookingDetailComponent extends BaseDetailComponent<Booking> impleme
             endDate: entity.endDate,
             seatsAvailable: entity.seatsAvailable,
             // @ts-ignore
-            productId: entity.productId
+            productVariantId: entity.productVariantId
         });
     }
 
     stringify(): string {
         return JSON.stringify(this.detailForm.getRawValue(), null, 2)
+    }
+
+    selected(product: SearchInputResult): void {
+        this.selectedSearchResult = product
+        this.detailForm.patchValue({
+            productVariantId: product.productVariantId
+        }, {
+            emitEvent: true
+        })
     }
 }

@@ -21,9 +21,6 @@ export class BookingEntity extends VendureEntity {
     @Column()
     seatsAvailable: number;
 
-    @ManyToOne(type => Product)
-    product: Product;
-
     @ManyToOne(type => ProductVariant)
-    productVariant: ProductVariant | null;
+    productVariant: ProductVariant;
 }

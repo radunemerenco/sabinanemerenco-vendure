@@ -9,6 +9,16 @@ export const GET_BOOKING = gql`
             endDate
             seatsAvailable
             createdAt
+            productVariant {
+                id
+                name
+                price
+                currencyCode
+                product {
+                    id
+                    name
+                }
+            }
         }
     }
 `;

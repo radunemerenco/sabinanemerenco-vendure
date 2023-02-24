@@ -8,8 +8,7 @@ export const commonApiExtensions = gql`
         name: String!
         startDate: DateTime!
         endDate: DateTime!
-        seatsAvailable: DateTime!
-        product: Product
+        seatsAvailable: Int!
         productVariant: ProductVariant!
     }
 
@@ -19,7 +18,7 @@ export const commonApiExtensions = gql`
     }
     
     extend type Product {
-        booking: Booking
+        bookings: BookingList
     }
 
     extend type Query {
@@ -48,7 +47,7 @@ export const adminApiExtensions = gql`
         startDate: DateTime
         endDate: DateTime
         seatsAvailable: Int
-        productId: ID!
+        productVariantId: ID!
     }
 
     input UpdateBookingInput {
@@ -57,6 +56,6 @@ export const adminApiExtensions = gql`
         startDate: DateTime
         endDate: DateTime
         seatsAvailable: Int
-        productId: ID!
+        productVariantId: ID!
     }
 `;

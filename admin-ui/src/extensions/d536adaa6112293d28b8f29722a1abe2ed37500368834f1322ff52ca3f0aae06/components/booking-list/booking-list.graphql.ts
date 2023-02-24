@@ -10,12 +10,14 @@ export const GET_BOOKINGS = gql`
                 endDate
                 seatsAvailable
                 createdAt
-                product {
+                productVariant {
                     id
                     name
-                    variants {
-                        price
-                        currencyCode
+                    price
+                    currencyCode
+                    product {
+                        id
+                        name
                     }
                 }
             }

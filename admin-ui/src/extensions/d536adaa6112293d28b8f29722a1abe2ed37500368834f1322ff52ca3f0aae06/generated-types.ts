@@ -4508,8 +4508,7 @@ export type Booking = Node & {
   startDate: Scalars['DateTime'];
   endDate: Scalars['DateTime'];
   seatsAvailable: Scalars['Int'];
-  product: Product
-  // productId: Scalars['ID']
+  productVariant: ProductVariant
 };
 
 export type BookingList = PaginatedList & {
@@ -4523,7 +4522,7 @@ export type CreateBookingInput = {
   startDate: Scalars['DateTime'];
   endDate: Scalars['DateTime'];
   seatsAvailable: Scalars['Int'];
-  productId: Scalars['ID'];
+  productVariantId: Scalars['ID'];
 };
 
 export type UpdateBookingInput = {
@@ -4532,7 +4531,7 @@ export type UpdateBookingInput = {
   startDate: Scalars['DateTime'];
   endDate: Scalars['DateTime'];
   seatsAvailable: Scalars['Int'];
-  productId: Scalars['ID'];
+  productVariantId: Scalars['ID'];
 };
 
 
@@ -4568,8 +4567,8 @@ export type ProductBookingListOptions = {
   filterOperator?: Maybe<LogicalOperator>;
 };
 
-export type GetBookingsForProductQueryVariables = Exact<{
-  productId: Scalars['ID'];
+export type GetBookingsForProductVariantQueryVariables = Exact<{
+  productVariantId: Scalars['ID'];
   options?: Maybe<ProductBookingListOptions>;
 }>;
 
@@ -4580,8 +4579,8 @@ export type ProductBooking = Node & {
   updatedAt: Scalars['DateTime'];
   startDate: Scalars['DateTime'];
   endDate: Scalars['DateTime'];
-  product: Product;
-  // productVariant?: Maybe<ProductVariant>;
+  productVariant: ProductVariant;
+  // productVariant: ProductVariant;
   seatsAvailable: Scalars['Int'];
 };
 
@@ -4600,10 +4599,10 @@ export type GetAllBookingsQueryVariables = Exact<{
   options?: Maybe<ProductBookingListOptions>;
 }>;
 
-export type GetBookingForProductQuery = (
+export type GetBookingForProductVariantQuery = (
   { __typename?: 'Query' }
-  & { product?: Maybe<(
-    { __typename?: 'Product' }
+  & { productVariant?: Maybe<(
+    { __typename?: 'ProductVariant' }
     & Pick<Product, 'id'>
     & { bookings: (
       { __typename?: 'ProductBookingList' }
@@ -4618,11 +4617,11 @@ export type GetBookingForProductQuery = (
 
 
 export namespace GetBookingsForProduct {
-  export type Variables = GetBookingsForProductQueryVariables;
-  export type Query = GetBookingForProductQuery;
-  export type Product = (NonNullable<GetBookingForProductQuery['product']>);
-  export type Bookings = (NonNullable<(NonNullable<GetBookingForProductQuery['product']>)['bookings']>);
-  export type Items = NonNullable<(NonNullable<(NonNullable<(NonNullable<GetBookingForProductQuery['product']>)['bookings']>)['items']>)[number]>;
+  export type Variables = GetBookingsForProductVariantQueryVariables;
+  export type Query = GetBookingForProductVariantQuery;
+  export type Product = (NonNullable<GetBookingForProductVariantQuery['productVariant']>);
+  export type Bookings = (NonNullable<(NonNullable<GetBookingForProductVariantQuery['productVariant']>)['bookings']>);
+  export type Items = NonNullable<(NonNullable<(NonNullable<(NonNullable<GetBookingForProductVariantQuery['productVariant']>)['bookings']>)['items']>)[number]>;
 }
 
 export type AdministratorListOptions = {
@@ -5156,7 +5155,7 @@ export type CreateBookingMutation = (
   { __typename?: 'Mutation' }
   & { createBooking: (
     { __typename?: 'Booking' }
-    & Pick<Booking, 'id' | 'name' | 'startDate' | 'endDate' | 'seatsAvailable' | 'product'>
+    & Pick<Booking, 'id' | 'name' | 'startDate' | 'endDate' | 'seatsAvailable' | 'productVariant'>
   ) }
 );
 
@@ -5169,7 +5168,7 @@ export type UpdateBookingMutation = (
   { __typename?: 'Mutation' }
   & { updateBooking: (
     { __typename?: 'Booking' }
-    & Pick<Booking, 'id' | 'name' | 'createdAt' | 'startDate' | 'endDate' | 'seatsAvailable' | 'product'>
+    & Pick<Booking, 'id' | 'name' | 'createdAt' | 'startDate' | 'endDate' | 'seatsAvailable' | 'productVariant'>
   ) }
 );
 
@@ -5185,7 +5184,7 @@ export type GetBookingsQuery = (
     & Pick<BookingList, 'totalItems'>
     & { items: Array<(
       { __typename?: 'Booking' }
-      & Pick<Booking, 'id' | 'name' | 'createdAt' | 'startDate' | 'endDate' | 'seatsAvailable' | 'product'>
+      & Pick<Booking, 'id' | 'name' | 'createdAt' | 'startDate' | 'endDate' | 'seatsAvailable' | 'productVariant'>
     )> }
   ) }
 );

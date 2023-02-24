@@ -19,7 +19,7 @@ export class BookingService {
         options?: BookingListOptions,
     ): Promise<PaginatedList<BookingEntity>> {
         return this.listQueryBuilder
-            .build(BookingEntity, options, { ctx , relations: ['product', "product.variants"]})
+            .build(BookingEntity, options, { ctx , relations: ['productVariant', "productVariant.product"]})
             .getManyAndCount()
             .then(([items, totalItems]) => {
                 console.log({ items })

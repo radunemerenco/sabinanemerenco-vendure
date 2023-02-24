@@ -2075,6 +2075,7 @@ export type Product = Node & {
   translations: Array<ProductTranslation>;
   collections: Array<Collection>;
   customFields?: Maybe<Scalars['JSON']>;
+  bookings?: Maybe<BookingList>
 };
 
 export type ProductVariant = Node & {
@@ -4509,7 +4510,7 @@ export type Booking = Node & {
   startDate: Scalars['DateTime'];
   endDate: Scalars['DateTime'];
   seatsAvailable: Scalars['Int']
-  product: Scalars['ID'];
+  productVariant: ProductVariant;
 };
 
 export type BookingList = PaginatedList & {
@@ -4522,8 +4523,8 @@ export type CreateBookingInput = {
   name: Scalars['String'];
   startDate: Scalars['DateTime']
   endDate: Scalars['DateTime']
-  seatsAvailable: Scalars['DateTime']
-  productId: Scalars['ID']
+  seatsAvailable: Scalars['Int']
+  productVariantId: Scalars['ID']
 };
 
 export type UpdateBookingInput = {
@@ -5049,7 +5050,7 @@ export type CreateBookingMutation = (
   { __typename?: 'Mutation' }
   & { createBooking: (
     { __typename?: 'Booking' }
-    & Pick<Booking, 'id' | 'name' | 'startDate' | 'endDate' | 'seatsAvailable' | 'productId'>
+    & Pick<Booking, 'id' | 'name' | 'startDate' | 'endDate' | 'seatsAvailable' | 'productVariant'>
   ) }
 );
 
@@ -5062,6 +5063,6 @@ export type UpdateBookingMutation = (
   { __typename?: 'Mutation' }
   & { updateBooking: (
     { __typename?: 'Booking' }
-    & Pick<Booking, 'id' | 'name' | 'startDate' | 'endDate' | 'seatsAvailable' | 'productId'>
+    & Pick<Booking, 'id' | 'name' | 'startDate' | 'endDate' | 'seatsAvailable' | 'productVariant'>
   ) }
 );
