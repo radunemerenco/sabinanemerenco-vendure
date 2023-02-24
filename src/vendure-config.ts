@@ -12,6 +12,7 @@ import path from 'path';
 import { BookingPlugin } from './plugins/booking/plugin';
 import {ReviewsPlugin} from "./plugins/reviews/reviews-plugin";
 import {customAdminUi} from "./compile-admin-ui";
+import {BookingEntity} from "./plugins/booking/entities/bookingEntity";
 
 const IS_DEV = process.env.APP_ENV === 'dev';
 const IS_PROD = path.basename(__dirname) === 'dist';
@@ -64,7 +65,18 @@ export const config: VendureConfig = {
     },
     // When adding or altering custom field definitions, the database will
     // need to be updated. See the "Migrations" section in README.md.
-    customFields: {},
+    customFields: {
+        OrderLine: [
+            {
+                name: 'booking',
+                type: 'relation',
+                entity: BookingEntity,
+                graphQLType: 'Booking',
+                // TODO: add a validation to restrict buying a booking with startDate from the past
+                // validate: value => {}
+            }
+        ]
+    },
     plugins: [
         AssetServerPlugin.init({
             route: 'assets',
