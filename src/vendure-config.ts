@@ -2,10 +2,10 @@ import {
     dummyPaymentHandler,
     DefaultJobQueuePlugin,
     DefaultSearchPlugin,
-    VendureConfig,
+    VendureConfig, DefaultAssetNamingStrategy,
 } from '@vendure/core';
 import { defaultEmailHandlers, EmailPlugin } from '@vendure/email-plugin';
-import { AssetServerPlugin } from '@vendure/asset-server-plugin';
+import {AssetServerPlugin, configureS3AssetStorage} from '@vendure/asset-server-plugin';
 import { AdminUiPlugin } from '@vendure/admin-ui-plugin';
 import 'dotenv/config';
 import path from 'path';
@@ -80,11 +80,21 @@ export const config: VendureConfig = {
     plugins: [
         AssetServerPlugin.init({
             route: 'assets',
-            assetUploadDir: path.join(__dirname, '../static/assets'),
-            // For local dev, the correct value for assetUrlPrefix should
-            // be guessed correctly, but for production it will usually need
-            // to be set manually to match your production url.
-            assetUrlPrefix: IS_DEV ? undefined : 'https://www.my-shop.com/assets',
+            assetUploadDir: path.join(__dirname, 'assets'),
+            // port: 5002,
+            namingStrategy: new DefaultAssetNamingStrategy(),
+            storageStrategyFactory: configureS3AssetStorage({
+                bucket: process.env.MINIO_BUCKET_NAME ?? 'my-minio-bucket',
+                credentials: {
+                    accessKeyId: process.env.MINIO_ACCESS_KEY_ID ?? '',
+                    secretAccessKey: process.env.MINIO_SECRET_ACCESS_KEY ?? '',
+                },
+                nativeS3Configuration: {
+                    endpoint: process.env.MINIO_ENDPOINT ?? 'http://localhost:9000',
+                    s3ForcePathStyle: true,
+                    signatureVersion: 'v4',
+                },
+            }),
         }),
         DefaultJobQueuePlugin.init({ useDatabaseForBuffer: true }),
         DefaultSearchPlugin.init({ bufferUpdates: false, indexStockStatus: true }),

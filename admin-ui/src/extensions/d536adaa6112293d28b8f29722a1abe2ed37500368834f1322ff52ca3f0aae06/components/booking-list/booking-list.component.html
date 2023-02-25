@@ -26,6 +26,7 @@
     (pageChange)="setPageNumber($event)"
     (itemsPerPageChange)="setItemsPerPage($event)"
 >
+    <vdr-dt-column>ID</vdr-dt-column>
     <vdr-dt-column>Name</vdr-dt-column>
     <vdr-dt-column>Created</vdr-dt-column>
     <vdr-dt-column>Start date</vdr-dt-column>
@@ -36,6 +37,7 @@
     <vdr-dt-column></vdr-dt-column>
 
     <ng-template let-booking="item">
+        <td class="left align-middle">{{ booking.id }}</td>
         <td class="left align-middle">{{ booking.name }}</td>
         <td class="left align-middle">
             {{ booking.createdAt | date:'mediumDate' }}
